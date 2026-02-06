@@ -1,16 +1,15 @@
-import WebSocket, { WebSocketServer } from 'ws';
-import {prisma} from "@repo/db/client"
+import { WebSocketServer } from 'ws';
 
-const ws = new WebSocketServer({
-    port:3001
-});
+const ws = new WebSocketServer({ port: 3001 });
 
 ws.on('error', console.error);
 
-ws.on('connection', (socket)=> {
-  socket.send('connected to the server!');
-});
+ws.on('connection', (socket) => {
+  console.log('Client connected');
 
-ws.on('message', function message(data) {
-  console.log('received: %s', data);
+  socket.send('connected to the server!');
+
+  socket.on('message', (data) => {
+    console.log('received:', data.toString());
+  });
 });
