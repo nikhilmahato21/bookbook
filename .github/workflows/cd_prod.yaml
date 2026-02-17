@@ -1,0 +1,35 @@
+name: Deploy to staging
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  redeploy_everything:
+    runs-on: ubuntu-latest
+    name: Deploying everything to the staging cluster
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 16.176.179.134
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/bookbook
+
+            echo "Pulling latest code"
+            git pull origin production
+
+            echo "Installing deps"
+            pnpm install
+
+            echo "Building app"
+            pnpm run build
+
+            echo "Restarting services"
+            pm2 restart frontend || pm2 start frontend
+            pm2 restart http-prod || pm2 start http-prod
+            pm2 restart ws-prod || pm2 start ws-prod
