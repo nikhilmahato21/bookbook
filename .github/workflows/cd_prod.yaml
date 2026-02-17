@@ -16,7 +16,7 @@ jobs:
         with:
           host: 16.176.179.134
           username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_PRODUCTION }}
           script: |
             cd ~/bookbook
 
