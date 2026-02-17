@@ -4,6 +4,6 @@
 
 export default function Home() {
   return (
-    <div>hellooo burke!</div>
+    <div>hellooo nikhil!</div>
   );
 }
