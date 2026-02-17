@@ -14,11 +14,11 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 64.227.147.124
+          host: 54.206.134.230
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/week-25-ci-next-app
+            cd ~/bookbook
 
             echo "Pulling latest code"
             git pull origin main
@@ -30,6 +30,6 @@ jobs:
             pnpm run build
 
             echo "Restarting services"
-            pm2 restart fe-server || pm2 start fe-server
-            pm2 restart http-server || pm2 start http-server
-            pm2 restart ws-server || pm2 start ws-server
+            pm2 restart frontend || pm2 start frontend
+            pm2 restart http || pm2 start http
+            pm2 restart ws || pm2 start ws
